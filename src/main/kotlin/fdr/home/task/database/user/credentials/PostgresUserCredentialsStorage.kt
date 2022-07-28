@@ -4,8 +4,10 @@ import org.springframework.jdbc.core.JdbcTemplate
 
 class PostgresUserCredentialsStorage(private val jdbcTemplate: JdbcTemplate) {
     fun save(entry: UserCredentials) {
-        val sql = """insert into credentials value (?,?)
+        val sql = """insert into credentials (login,password) values (?,?)
             on conflict (login) do update set
+            login = excluded.login,
+            password = excluded.password
         """
         jdbcTemplate.update(sql, entry.login, entry.password)
     }

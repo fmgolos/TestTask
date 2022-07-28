@@ -21,6 +21,10 @@
             <artifactId>kotlin-logging-jvm</artifactId>
             <version>2.1.23</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
         <!--Database-->
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>

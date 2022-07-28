@@ -13,11 +13,20 @@ internal class PostgresUserCredentialsStorageTest {
 
     @Test
     fun save() {
+        val user = UserCredentials("testLogin", "testPassword")
+        dbStorage.save(user)
+        assertTrue(true)
 
     }
 
     @Test
     fun isExist() {
+        val user = UserCredentials("testLogin", "testPassword")
+        dbStorage.save(user)
+        val exist = dbStorage.isExist("testLogin", "testPassword")
+        val notExist = dbStorage.isExist("falseLogin", "falsePassword")
+        assertTrue(exist)
+        assertFalse(notExist)
     }
 
     private fun getJdbcTemplate(): JdbcTemplate {
