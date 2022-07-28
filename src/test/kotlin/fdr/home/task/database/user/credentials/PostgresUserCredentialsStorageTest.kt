@@ -2,6 +2,7 @@ package fdr.home.task.database.user.credentials
 
 import fdr.home.task.database.FlywayConfig
 import fdr.home.task.database.PostgresContainerWrapper
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -12,17 +13,20 @@ internal class PostgresUserCredentialsStorageTest {
     private val dbStorage = PostgresUserCredentialsStorage(getJdbcTemplate())
 
     @Test
-    fun save() {
-        val user = UserCredentials("testLogin", "testPassword")
-        dbStorage.save(user)
-        assertTrue(true)
-
+    fun createNewUser() {
+        val login = "testLogin"
+        val password = "testPassword"
+        val user = UserCredentialsRequest(login, password)
+        val id = dbStorage.createNewUser(user)
+        val actual = UserCredentials(id, login, password)
+        val expected = dbStorage.getById(id)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
     fun isExist() {
-        val user = UserCredentials("testLogin", "testPassword")
-        dbStorage.save(user)
+        val user = UserCredentialsRequest("testLogin", "testPassword")
+        dbStorage.createNewUser(user)
         val exist = dbStorage.isExist("testLogin", "testPassword")
         val notExist = dbStorage.isExist("falseLogin", "falsePassword")
         assertTrue(exist)
