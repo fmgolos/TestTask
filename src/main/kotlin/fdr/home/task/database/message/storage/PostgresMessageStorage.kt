@@ -27,10 +27,6 @@ class PostgresMessageStorage(private val jdbcTemplate: JdbcTemplate) {
             messageHistoryRequest.name,
             messageHistoryRequest.amountOfHistoryMessage
         )
-//        return if (messageHistoryRequest.amountOfHistoryMessage <= dbResponse.size) {
-//            dbResponse.subList(dbResponse.size - messageHistoryRequest.amountOfHistoryMessage, dbResponse.size)
-//                .toList()
-//        } else dbResponse
     }
 
     internal fun getById(id: Int): Message {
