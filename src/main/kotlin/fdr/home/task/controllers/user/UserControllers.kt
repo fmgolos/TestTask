@@ -1,24 +1,26 @@
 package fdr.home.task.controllers.user
 
+import fdr.home.task.config.UnAuthorizedException
 import fdr.home.task.database.user.storage.PostgresUserStorage
-import fdr.home.task.database.user.storage.UserCredentials
 import fdr.home.task.database.user.storage.UserCredentialsRequest
 import fdr.home.task.service.authentification.Authentication
-import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import java.lang.IllegalArgumentException
 
 @RestController
 class UserControllers(private val userCredentialsStorage: PostgresUserStorage) {
     @PostMapping("/login")
     fun login(@RequestBody userCredentialsRequest: UserCredentialsRequest): AuthResponse {
-        val token = Authentication(userCredentialsStorage).login(
-            userCredentialsRequest.login,
-            userCredentialsRequest.password
-        )
-        return AuthResponse(token)
+        if (userCredentialsStorage.isExist(userCredentialsRequest.login,userCredentialsRequest.password)){
+            val token = Authentication(userCredentialsStorage).login(
+                userCredentialsRequest.login,
+                userCredentialsRequest.password
+            )
+            return AuthResponse(token)
+        }
+        else throw UnAuthorizedException()
+
     }
 
 //    @DeleteMapping("/delete")
