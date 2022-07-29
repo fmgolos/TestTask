@@ -1,4 +1,4 @@
-package fdr.home.task.config
+package fdr.home.task.web.exceptions
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus

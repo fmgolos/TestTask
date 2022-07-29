@@ -20,5 +20,8 @@ class Authentication(private val userStorage: PostgresUserStorage) {
             .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
             .compact();
     }
+    private fun validate(){
+
+    }
 }
 

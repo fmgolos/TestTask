@@ -1,4 +1,4 @@
-package fdr.home.task.config
+package fdr.home.task.database
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource

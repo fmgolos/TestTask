@@ -1,6 +1,6 @@
 package fdr.home.task.controllers.user
 
-import fdr.home.task.config.UnAuthorizedException
+import fdr.home.task.web.exceptions.UnAuthorizedException
 import fdr.home.task.database.user.storage.PostgresUserStorage
 import fdr.home.task.database.user.storage.UserCredentialsRequest
 import fdr.home.task.service.authentification.Authentication
