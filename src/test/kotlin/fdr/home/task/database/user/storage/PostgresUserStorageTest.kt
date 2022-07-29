@@ -10,36 +10,36 @@ import org.springframework.jdbc.core.JdbcTemplate
 
 internal class PostgresUserStorageTest {
 
-    private val dbStorage = PostgresUserStorage(getJdbcTemplate())
+    private val userStorage = PostgresUserStorage(PostgresContainerWrapper.getJdbcTemplate())
 
     @Test
-    fun createNewUser() {
+    fun `create new user`() {
         val login = "testLogin"
         val password = "testPassword"
         val user = UserCredentialsRequest(login, password)
-        val id = dbStorage.createNewUser(user)
+        val id = userStorage.createNewUser(user)
         val actual = UserCredentials(id, login, password)
-        val expected = dbStorage.getById(id)
+        val expected = userStorage.getById(id)
         assertThat(actual).isEqualTo(expected)
     }
 
     @Test
-    fun isExist() {
+    fun `user is exist`() {
         val user = UserCredentialsRequest("testLogin", "testPassword")
-        dbStorage.createNewUser(user)
-        val exist = dbStorage.isExist("testLogin", "testPassword")
-        val notExist = dbStorage.isExist("falseLogin", "falsePassword")
+        userStorage.createNewUser(user)
+        val exist = userStorage.isExist("testLogin", "testPassword")
+        val notExist = userStorage.isExist("falseLogin", "falsePassword")
         assertTrue(exist)
         assertFalse(notExist)
     }
 
-    private fun getJdbcTemplate(): JdbcTemplate {
-        val containerWrapper = PostgresContainerWrapper()
-        return FlywayConfig(
-            jdbcUrl = containerWrapper.container.jdbcUrl,
-            username = containerWrapper.container.username,
-            password = containerWrapper.container.password,
-            databaseName = containerWrapper.container.databaseName
-        ).getJdbcTemplate()
+    @Test
+    fun `delete user`() {
+        val user = UserCredentialsRequest("testLogin", "testPassword")
+        val userId = userStorage.createNewUser(user)
+        userStorage.delete(userId)
+        assertFalse(userStorage.isExist(user.login, user.password))
+        assertThat(userStorage.getById(userId)).isEqualTo(null)
     }
+
 }

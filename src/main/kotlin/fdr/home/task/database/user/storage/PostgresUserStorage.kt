@@ -33,8 +33,8 @@ class PostgresUserStorage(private val jdbcTemplate: JdbcTemplate) {
         jdbcTemplate.update(sql, id)
     }
 
-    internal fun getById(id: Int): UserCredentials {
+    internal fun getById(id: Int): UserCredentials? {
         val sql = " select * from users where id = ?"
-        return jdbcTemplate.query(sql, UserCredentialsMapper(), id).first()
+        return jdbcTemplate.query(sql, UserCredentialsMapper(), id).firstOrNull()
     }
 }
