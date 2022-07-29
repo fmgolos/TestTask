@@ -1,4 +1,4 @@
-package fdr.home.task.database.user.credentials
+package fdr.home.task.database.user.storage
 
 import fdr.home.task.database.FlywayConfig
 import fdr.home.task.database.PostgresContainerWrapper
@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.springframework.jdbc.core.JdbcTemplate
 
-internal class PostgresUserCredentialsStorageTest {
+internal class PostgresUserStorageTest {
 
-    private val dbStorage = PostgresUserCredentialsStorage(getJdbcTemplate())
+    private val dbStorage = PostgresUserStorage(getJdbcTemplate())
 
     @Test
     fun createNewUser() {

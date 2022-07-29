@@ -1,14 +1,14 @@
-package fdr.home.task.service
+package fdr.home.task.service.authentification
 
-import fdr.home.task.database.user.credentials.PostgresUserCredentialsStorage
+import fdr.home.task.database.user.storage.PostgresUserStorage
 import io.jsonwebtoken.Jwts
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.*
 
-class UserCredentialValidator(private val userStorage: PostgresUserCredentialsStorage) {
+class Authentication(private val userStorage: PostgresUserStorage) {
 
-    fun validate(login: String, password: String): String {
+    fun login(login: String, password: String): String {
         if (userStorage.isExist(login, password)) {
             return create(login)
         } else throw IllegalAccessException("access denied")

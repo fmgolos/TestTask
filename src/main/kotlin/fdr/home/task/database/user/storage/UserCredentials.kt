@@ -1,10 +1,9 @@
-package fdr.home.task.database.user.credentials
+package fdr.home.task.database.user.storage
 
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
 
-data class UserCredentials(val id: Int, val login: String, val password: String) {
-}
+data class UserCredentials(val id: Int, val login: String, val password: String)
 
 data class UserCredentialsRequest(val login: String, val password: String)
 
@@ -16,5 +15,4 @@ class UserCredentialsMapper : RowMapper<UserCredentials> {
             password = rs.getString(3)
         )
     }
-
 }
