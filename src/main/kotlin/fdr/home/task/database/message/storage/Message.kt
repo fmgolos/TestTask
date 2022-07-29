@@ -1,4 +1,4 @@
-package fdr.home.task.database.message.storage
+package fdr.home.task.message.storage
 
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet

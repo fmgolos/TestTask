@@ -1,8 +1,8 @@
 package fdr.home.task.controllers
 
-import fdr.home.task.database.user.storage.PostgresUserStorage
-import fdr.home.task.database.user.storage.UserCredentials
-import fdr.home.task.database.user.storage.UserCredentialsRequest
+import fdr.home.task.user.storage.PostgresUserStorage
+import fdr.home.task.user.storage.UserCredentials
+import fdr.home.task.user.storage.UserCredentialsRequest
 import fdr.home.task.service.authentification.Authentication
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping

@@ -1,5 +1,6 @@
 package fdr.home.task.database
 
+import fdr.home.task.FlywayConfig
 import org.springframework.jdbc.core.JdbcTemplate
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName

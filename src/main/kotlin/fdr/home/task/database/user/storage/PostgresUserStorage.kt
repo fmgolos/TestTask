@@ -1,4 +1,4 @@
-package fdr.home.task.database.user.storage
+package fdr.home.task.user.storage
 
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder

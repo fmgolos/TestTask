@@ -1,6 +1,6 @@
 package fdr.home.task.service.authentification
 
-import fdr.home.task.database.user.storage.PostgresUserStorage
+import fdr.home.task.user.storage.PostgresUserStorage
 import io.jsonwebtoken.Jwts
 import java.time.Instant
 import java.time.temporal.ChronoUnit
