@@ -1,6 +1,10 @@
-package fdr.home.task.message.storage
+package fdr.home.task.database.message.storage
 
 import fdr.home.task.database.PostgresContainerWrapper
+import fdr.home.task.message.storage.Message
+import fdr.home.task.message.storage.MessageHistoryRequest
+import fdr.home.task.message.storage.MessageRequest
+import fdr.home.task.message.storage.PostgresMessageStorage
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

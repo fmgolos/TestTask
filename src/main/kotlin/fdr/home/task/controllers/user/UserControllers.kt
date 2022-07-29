@@ -1,4 +1,4 @@
-package fdr.home.task.controllers
+package fdr.home.task.controllers.user
 
 import fdr.home.task.user.storage.PostgresUserStorage
 import fdr.home.task.user.storage.UserCredentials

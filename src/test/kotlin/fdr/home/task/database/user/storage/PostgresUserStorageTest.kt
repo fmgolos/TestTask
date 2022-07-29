@@ -1,6 +1,9 @@
-package fdr.home.task.user.storage
+package fdr.home.task.database.user.storage
 
 import fdr.home.task.database.PostgresContainerWrapper
+import fdr.home.task.user.storage.PostgresUserStorage
+import fdr.home.task.user.storage.UserCredentials
+import fdr.home.task.user.storage.UserCredentialsRequest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
