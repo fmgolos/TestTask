@@ -1,4 +1,4 @@
-package fdr.home.task.message.storage
+package fdr.home.task.database.message.storage
 
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
@@ -20,12 +20,17 @@ class PostgresMessageStorage(private val jdbcTemplate: JdbcTemplate) {
     }
 
     fun getHistory(messageHistoryRequest: MessageHistoryRequest): List<Message> {
-        val sql = "select * from message_storage where login = ?"
-        val dbResponse = jdbcTemplate.query(sql, MessageMapper(), messageHistoryRequest.name)
-        return if (messageHistoryRequest.amountOfHistoryMessage <= dbResponse.size) {
-            dbResponse.subList(dbResponse.size - messageHistoryRequest.amountOfHistoryMessage, dbResponse.size)
-                .toList()
-        } else dbResponse
+        val sql = "select * from message_storage where login = ? order by id desc  limit ? "
+        return jdbcTemplate.query(
+            sql,
+            MessageMapper(),
+            messageHistoryRequest.name,
+            messageHistoryRequest.amountOfHistoryMessage
+        )
+//        return if (messageHistoryRequest.amountOfHistoryMessage <= dbResponse.size) {
+//            dbResponse.subList(dbResponse.size - messageHistoryRequest.amountOfHistoryMessage, dbResponse.size)
+//                .toList()
+//        } else dbResponse
     }
 
     internal fun getById(id: Int): Message {

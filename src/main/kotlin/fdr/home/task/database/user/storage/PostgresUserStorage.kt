@@ -1,4 +1,4 @@
-package fdr.home.task.user.storage
+package fdr.home.task.database.user.storage
 
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
@@ -31,6 +31,11 @@ class PostgresUserStorage(private val jdbcTemplate: JdbcTemplate) {
     fun delete(id: Int) {
         val sql = "delete from users where id = ?"
         jdbcTemplate.update(sql, id)
+    }
+
+    internal fun getByName(name: String): UserCredentials? {
+        val sql = "select *from users where login = ?"
+        return jdbcTemplate.query(sql, UserCredentialsMapper(), name).firstOrNull()
     }
 
     internal fun getById(id: Int): UserCredentials? {
