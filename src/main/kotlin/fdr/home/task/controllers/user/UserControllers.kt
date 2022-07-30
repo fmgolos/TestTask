@@ -13,7 +13,7 @@ class UserControllers(private val userCredentialsStorage: PostgresUserStorage) {
     @PostMapping("/login")
     fun login(@RequestBody userCredentialsRequest: UserCredentialsRequest): AuthResponse {
         if (userCredentialsStorage.isExist(userCredentialsRequest.login,userCredentialsRequest.password)){
-            val token = Authentication(userCredentialsStorage).login(
+            val token = Authentication().login(
                 userCredentialsRequest.login,
                 userCredentialsRequest.password
             )

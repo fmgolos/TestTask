@@ -11,7 +11,7 @@ internal class PostgresMessageStorageTest {
     fun save() {
         val messageRequest = MessageRequest("testName", "Test text")
         val messageId = dbMessageStorage.save(messageRequest)
-        val actualMessage = Message(messageId, messageRequest.name, messageRequest.text)
+        val actualMessage = Message(messageId, messageRequest.name, messageRequest.message)
         val expected = dbMessageStorage.getById(messageId)
         assertThat(actualMessage).isEqualTo(expected)
     }
@@ -23,7 +23,7 @@ internal class PostgresMessageStorageTest {
         messageRequestList.forEach { dbMessageStorage.save(it) }
         val messageHistoryRequest = MessageHistoryRequest(name, 10)
         val actual = (11..20).map { messageRequestList[it] }
-        val expected = dbMessageStorage.getHistory(messageHistoryRequest).map { MessageRequest(it.name, it.text) }
+        val expected = dbMessageStorage.getHistory(messageHistoryRequest).map { MessageRequest(it.name, it.message) }
         assertThat(actual).containsAll(expected)
     }
 
@@ -33,7 +33,7 @@ internal class PostgresMessageStorageTest {
         val actual = (0..4).map { it -> MessageRequest(name, "TestText $it") }
         actual.forEach { dbMessageStorage.save(it) }
         val messageHistoryRequest = MessageHistoryRequest(name, 10)
-        val expected = dbMessageStorage.getHistory(messageHistoryRequest).map { MessageRequest(it.name, it.text) }
+        val expected = dbMessageStorage.getHistory(messageHistoryRequest).map { MessageRequest(it.name, it.message) }
         assertThat(actual).containsAll(expected)
     }
 }

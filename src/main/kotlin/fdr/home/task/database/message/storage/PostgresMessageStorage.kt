@@ -13,7 +13,7 @@ class PostgresMessageStorage(private val jdbcTemplate: JdbcTemplate) {
         jdbcTemplate.update({ connection ->
             val ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
             ps.setString(1, entry.name)
-            ps.setString(2, entry.text)
+            ps.setString(2, entry.message)
             ps
         }, keyHolder)
         return keyHolder.keyList.first().getValue("id").toString().toInt()
