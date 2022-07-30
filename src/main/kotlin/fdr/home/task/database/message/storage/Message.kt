@@ -7,6 +7,7 @@ data class Message(val id: Int, val name: String, val message: String)
 
 data class MessageRequest(val name: String, val message: String)
 
+
 data class MessageHistoryRequest(val name: String, val amountOfHistoryMessage: Int)
 
 class MessageMapper : RowMapper<Message> {

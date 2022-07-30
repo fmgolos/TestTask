@@ -10,8 +10,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 class ForeignKeyTest {
-    private val messageStorage = PostgresMessageStorage(PostgresContainerWrapper.getJdbcTemplate())
-    private val userStorage = PostgresUserStorage(PostgresContainerWrapper.getJdbcTemplate())
+    private val template = PostgresContainerWrapper.getJdbcTemplate()
+    private val messageStorage = PostgresMessageStorage(template)
+    private val userStorage = PostgresUserStorage(template)
 
     @Test
     fun `when user wad deleted all message deleted too`() {

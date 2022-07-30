@@ -2,6 +2,7 @@ package fdr.home.task.service.authentification
 
 import com.auth0.jwt.JWT
 import fdr.home.task.database.user.storage.PostgresUserStorage
+import fdr.home.task.web.exceptions.UnAuthorizedException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -16,7 +17,10 @@ class Authentication() {
         val userStorage = PostgresUserStorage(JdbcTemplate())
         if (userStorage.isExist(login, password)) {
             return create(login)
-        } else throw IllegalAccessException("access denied")
+        } else throw UnAuthorizedException()
+    }
+     fun isValid(token: String): Boolean {
+        return isToken(token) && isNotExpired(token)
     }
 
     private fun create(login: String): String {
@@ -24,10 +28,6 @@ class Authentication() {
             .claim("name", login)
             .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
             .compact()
-    }
-
-    internal fun isValid(token: String): Boolean {
-        return isToken(token) && isNotExpired(token)
     }
 
     internal fun isToken(token: String): Boolean {
