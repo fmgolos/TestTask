@@ -18,5 +18,6 @@ class MessageMapper : RowMapper<Message> {
             message = rs.getString(3)
         )
     }
+
 }
 
