@@ -21,7 +21,6 @@ class Authentication(private val userStorage: PostgresUserStorage) {
             .compact();
     }
     private fun validate(){
-
     }
 }
 

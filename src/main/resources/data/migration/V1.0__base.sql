@@ -9,6 +9,7 @@ create table if not exists users
 create table if not exists message_storage
 (
     id       SERIAL PRIMARY KEY,
-    login    TEXT   not null,
+    login    TEXT   not null REFERENCES users (id) ON DELETE CASCADE,
     text     TEXT   not null
 );
+
