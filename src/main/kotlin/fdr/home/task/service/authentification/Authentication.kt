@@ -1,13 +1,11 @@
 package fdr.home.task.service.authentification
 
+import com.auth0.jwt.JWT
 import fdr.home.task.database.user.storage.PostgresUserStorage
-import io.jsonwebtoken.Claims
-import io.jsonwebtoken.Jws
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.springframework.jdbc.core.JdbcTemplate
-import java.lang.Exception
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.*
@@ -28,7 +26,11 @@ class Authentication() {
             .compact()
     }
 
-   internal fun isToken(token: String): Boolean {
+    internal fun isValid(token: String): Boolean {
+        return isToken(token) && isNotExpired(token)
+    }
+
+    internal fun isToken(token: String): Boolean {
         return try {
             Jwts.parserBuilder().build().parse(token)
             true
@@ -36,22 +38,27 @@ class Authentication() {
             false
         }
     }
+
+    internal fun isNotExpired(token: String): Boolean {
+        val decode = JWT.decode(token)
+        val expiresAt = decode.expiresAt.toInstant()
+        return expiresAt > Instant.now()
+    }
 }
 
-//fun main() {
-//    val key = Keys.secretKeyFor(SignatureAlgorithm.HS256)
-//    val token = Jwts.builder()
-//        .claim("Name", "HYU")
-//        .signWith(key)
-//        .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
-//        .compact()
-//    println(token)
-//
-//    val result = Jwts.parserBuilder()
-//        .setSigningKey(key)
-//        .build()
-//        .parse(token)
-//
-//    println(result)
-//    println(key)
-//}
+fun main() {
+    val key = Keys.secretKeyFor(SignatureAlgorithm.HS256)
+    val token = Jwts.builder()
+        .claim("Name", "HYU")
+        .signWith(key)
+        .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
+        .compact()
+    println(token)
+
+    val result = Jwts.parserBuilder()
+        .setSigningKey(key)
+        .build()
+        .parse(token)
+
+
+}

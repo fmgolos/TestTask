@@ -20,7 +20,7 @@ class AuthenticationTest {
     }
 
     @Test
-    fun `is not token`(){
+    fun `is not token`() {
         val token = Jwts.builder()
             .claim("name", "TestName")
             .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
@@ -28,4 +28,35 @@ class AuthenticationTest {
 
         assertFalse(Authentication().isToken(token))
     }
+
+    @Test
+    fun `token is expired`() {
+        val tokenIsExpired = Jwts.builder()
+            .claim("name", "TestName")
+            .setExpiration(Date.from(Instant.now().minus(24, ChronoUnit.HOURS)))
+            .compact()
+        val tokenIsNotExpired = Jwts.builder()
+            .claim("name", "TestName")
+            .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
+            .compact()
+
+        assertTrue(Authentication().isNotExpired(tokenIsNotExpired))
+        assertFalse(Authentication().isNotExpired(tokenIsExpired))
+    }
+
+    @Test
+    fun `token is valid`() {
+        val validToken = Jwts.builder()
+            .claim("name", "TestName")
+            .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
+            .compact()
+        val invalidToken = Jwts.builder()
+            .claim("name", "TestName")
+            .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
+            .compact().plus("SomeSymbols")
+        assertTrue(Authentication().isValid(validToken))
+        assertFalse(Authentication().isValid(invalidToken))
+
+    }
+
 }
