@@ -1,5 +1,8 @@
 package fdr.home.task.service.authentification
 
+import fdr.home.task.database.PostgresContainerWrapper
+import fdr.home.task.database.message.storage.PostgresMessageStorage
+import fdr.home.task.database.user.storage.PostgresUserStorage
 import io.jsonwebtoken.Jwts
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
@@ -9,6 +12,9 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 
 class AuthenticationTest {
+    private val template = PostgresContainerWrapper.getJdbcTemplate()
+    private val userStorage = PostgresUserStorage(template)
+
     @Test
     fun `is token`() {
         val token = Jwts.builder()
@@ -16,7 +22,7 @@ class AuthenticationTest {
             .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
             .compact()
 
-        assertTrue(Authentication().isToken(token))
+        assertTrue(Authentication(userStorage).isToken(token))
     }
 
     @Test
@@ -26,7 +32,7 @@ class AuthenticationTest {
             .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
             .compact().plus("RandomSymbols")
 
-        assertFalse(Authentication().isToken(token))
+        assertFalse(Authentication(userStorage).isToken(token))
     }
 
     @Test
@@ -40,8 +46,8 @@ class AuthenticationTest {
             .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
             .compact()
 
-        assertTrue(Authentication().isNotExpired(tokenIsNotExpired))
-        assertFalse(Authentication().isNotExpired(tokenIsExpired))
+        assertTrue(Authentication(userStorage).isNotExpired(tokenIsNotExpired))
+        assertFalse(Authentication(userStorage).isNotExpired(tokenIsExpired))
     }
 
     @Test
@@ -54,8 +60,8 @@ class AuthenticationTest {
             .claim("name", "TestName")
             .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
             .compact().plus("SomeSymbols")
-        assertTrue(Authentication().isValid(validToken))
-        assertFalse(Authentication().isValid(invalidToken))
+        assertTrue(Authentication(userStorage).isValid(validToken))
+        assertFalse(Authentication(userStorage).isValid(invalidToken))
 
     }
 
