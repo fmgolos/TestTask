@@ -35,5 +35,6 @@ class FlywayConfig(
     fun getJdbcTemplate(): JdbcTemplate {
         return jdbcTemplate
     }
+
     private companion object : KLogging()
 }

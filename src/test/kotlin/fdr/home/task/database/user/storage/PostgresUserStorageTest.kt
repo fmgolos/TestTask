@@ -2,9 +2,9 @@ package fdr.home.task.database.user.storage
 
 import fdr.home.task.database.PostgresContainerWrapper
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class PostgresUserStorageTest {
 

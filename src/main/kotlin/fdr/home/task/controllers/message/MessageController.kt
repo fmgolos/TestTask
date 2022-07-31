@@ -18,6 +18,6 @@ class MessageController(private val messageStorage: PostgresMessageStorage) {
 
     @GetMapping("/history")
     fun getHistory(@RequestBody messageHistoryRequest: MessageHistoryRequest): List<Message> {
-       return messageStorage.getHistory(messageHistoryRequest)
+        return messageStorage.getHistory(messageHistoryRequest)
     }
 }

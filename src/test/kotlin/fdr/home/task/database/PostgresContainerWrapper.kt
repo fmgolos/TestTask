@@ -16,8 +16,9 @@ class PostgresContainerWrapper {
     init {
         container.start()
     }
-    companion object{
-         fun getJdbcTemplate(): JdbcTemplate {
+
+    companion object {
+        fun getJdbcTemplate(): JdbcTemplate {
             val containerWrapper = PostgresContainerWrapper()
             return FlywayConfig(
                 jdbcUrl = containerWrapper.container.jdbcUrl,

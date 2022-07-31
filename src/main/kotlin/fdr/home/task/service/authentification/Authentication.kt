@@ -19,7 +19,8 @@ class Authentication() {
             return create(login)
         } else throw UnAuthorizedException()
     }
-     fun isValid(token: String): Boolean {
+
+    fun isValid(token: String): Boolean {
         return isToken(token) && isNotExpired(token)
     }
 
