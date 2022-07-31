@@ -11,10 +11,9 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.*
 
-class Authentication() {
+class Authentication(private val userStorage: PostgresUserStorage) {
 
     fun login(login: String, password: String): String {
-        val userStorage = PostgresUserStorage(JdbcTemplate())
         if (userStorage.isExist(login, password)) {
             return create(login)
         } else throw UnAuthorizedException()

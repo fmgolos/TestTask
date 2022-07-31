@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class UserControllers(private val userCredentialsStorage: PostgresUserStorage) {
+class UserControllers(private val userCredentialsStorage: PostgresUserStorage,private val authentication: Authentication) {
     @PostMapping("/login")
     fun login(@RequestBody userCredentialsRequest: UserCredentialsRequest): AuthResponse {
-        val token = Authentication().login(userCredentialsRequest.login, userCredentialsRequest.password)
+        val token = authentication.login(userCredentialsRequest.login, userCredentialsRequest.password)
 
         return AuthResponse(token)
     }
