@@ -5,11 +5,6 @@ import java.sql.ResultSet
 
 data class Message(val id: Int, val name: String, val message: String)
 
-data class MessageRequest(val name: String, val message: String)
-
-
-data class MessageHistoryRequest(val name: String, val amountOfHistoryMessage: Int)
-
 class MessageMapper : RowMapper<Message> {
     override fun mapRow(rs: ResultSet, rowNum: Int): Message {
         return Message(

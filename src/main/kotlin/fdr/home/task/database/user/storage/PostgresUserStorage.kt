@@ -1,5 +1,9 @@
 package fdr.home.task.database.user.storage
 
+import fdr.home.task.controllers.user.UserCredentialsRequest
+import fdr.home.task.database.message.storage.PostgresMessageStorage
+import mu.KLogger
+import mu.KLogging
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
 import org.springframework.jdbc.support.KeyHolder
@@ -19,6 +23,7 @@ class PostgresUserStorage(private val jdbcTemplate: JdbcTemplate) {
             ps.setString(2, entry.password)
             ps
         }, keyHolder)
+        logger.info { "User was successfully save ti database" }
         return keyHolder.keyList.first().getValue("id").toString().toInt()
     }
 
@@ -42,4 +47,6 @@ class PostgresUserStorage(private val jdbcTemplate: JdbcTemplate) {
         val sql = " select * from users where id = ?"
         return jdbcTemplate.query(sql, UserCredentialsMapper(), id).firstOrNull()
     }
+
+    companion object : KLogging()
 }

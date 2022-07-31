@@ -1,14 +1,19 @@
 package fdr.home.task.database.user.storage
 
+import fdr.home.task.controllers.message.MessageHistoryRequest
+import fdr.home.task.controllers.message.MessageRequest
+import fdr.home.task.controllers.user.UserCredentialsRequest
 import fdr.home.task.database.PostgresContainerWrapper
+import fdr.home.task.database.message.storage.PostgresMessageStorage
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 internal class PostgresUserStorageTest {
-
-    private val userStorage = PostgresUserStorage(PostgresContainerWrapper.getJdbcTemplate())
+    private val template = PostgresContainerWrapper.getJdbcTemplate()
+    private val messageStorage = PostgresMessageStorage(template)
+    private val userStorage = PostgresUserStorage(template)
 
     @Test
     fun `create new user`() {
@@ -38,6 +43,20 @@ internal class PostgresUserStorageTest {
         userStorage.delete(userId)
         assertFalse(userStorage.isExist(user.login, user.password))
         assertThat(userStorage.getById(userId)).isEqualTo(null)
+    }
+
+    @org.junit.Test
+    fun `when user wad deleted all message deleted too`() {
+        val name = "user"
+        val user = UserCredentialsRequest(name, "password")
+        val message = MessageRequest(name, "message text")
+
+        val userId = userStorage.createNewUser(user)
+        messageStorage.save(message)
+
+        userStorage.delete(userId)
+        val history = messageStorage.getHistory(MessageHistoryRequest(name, 10))
+        assertThat(history).hasSize(0)
     }
 
 }

@@ -27,7 +27,8 @@ class Configuration {
             val securitySchemeName = "Token"
             val securityScheme = SecurityScheme()
                 .name("Authorization")
-                .scheme("string")
+                .scheme("bearer")
+                .bearerFormat("JWT")
                 .type(SecurityScheme.Type.APIKEY)
                 .`in`(SecurityScheme.In.HEADER)
             it.components.addSecuritySchemes(securitySchemeName, securityScheme)
