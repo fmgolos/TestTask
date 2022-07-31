@@ -48,4 +48,19 @@ curl -X 'POST' \
 ```
 ### send message
 
+```console
+curl -X 'POST' \
+  'http://localhost:8888/send' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "NAME THAT YOU SET IN `CREATE USER` STEP",
+  "message": "YOUR TEXT HERE"
+}'
+```
+### history request
+```console
+TODO
+```
+
 
