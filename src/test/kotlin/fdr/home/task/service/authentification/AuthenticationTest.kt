@@ -1,11 +1,11 @@
 package fdr.home.task.service.authentification
 
 import fdr.home.task.database.PostgresContainerWrapper
-import fdr.home.task.database.message.storage.PostgresMessageStorage
 import fdr.home.task.database.user.storage.PostgresUserStorage
 import io.jsonwebtoken.Jwts
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.Instant
 import java.time.temporal.ChronoUnit
@@ -62,7 +62,16 @@ class AuthenticationTest {
             .compact().plus("SomeSymbols")
         assertTrue(Authentication(userStorage).isValid(validToken))
         assertFalse(Authentication(userStorage).isValid(invalidToken))
-
     }
 
+    @Test
+    fun `get name from token`() {
+        val name = "TestName"
+        val token = Jwts.builder()
+            .claim("name", name)
+            .setExpiration(Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
+            .compact()
+        val expected = Authentication(userStorage).parseNameFromToken(token)
+        assertThat(name).isEqualTo(expected)
+    }
 }

@@ -44,6 +44,11 @@ class Authentication(private val userStorage: PostgresUserStorage) {
         val expiresAt = decode.expiresAt.toInstant()
         return expiresAt > Instant.now()
     }
+
+    internal fun parseNameFromToken(token: String): String {
+        val decode = JWT.decode(token).getClaim("name").toString()
+        return decode.replace("\"", "")
+    }
 }
 
 fun main() {
@@ -55,9 +60,7 @@ fun main() {
         .compact()
     println(token)
 
-    val result = Jwts.parserBuilder()
-        .setSigningKey(key)
-        .build()
-        .parse(token)
+    val decode = JWT.decode(token)
+    println(decode.getClaim("Name").toString().replace("\"", ""))
 
 }
