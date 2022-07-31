@@ -16,6 +16,11 @@ class UserControllers(private val userCredentialsStorage: PostgresUserStorage) {
         return AuthResponse(token)
     }
 
+    @PostMapping("/create")
+    fun createNewUser(@RequestBody userCredentialsRequest: UserCredentialsRequest) {
+        userCredentialsStorage.createNewUser(userCredentialsRequest)
+    }
+
 //    @DeleteMapping("/delete")
 //    fun delete(@RequestBody user: UserCredentialsRequest) {
 //        if (userCredentialsStorage.isExist(user.login, user.password)) {
