@@ -2,6 +2,9 @@ package fdr.home.task.config
 
 import fdr.home.task.database.message.storage.PostgresMessageStorage
 import fdr.home.task.database.user.storage.PostgresUserStorage
+import io.swagger.v3.oas.models.security.SecurityRequirement
+import io.swagger.v3.oas.models.security.SecurityScheme
+import org.springdoc.core.customizers.OpenApiCustomiser
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.core.JdbcTemplate
@@ -16,5 +19,19 @@ class Configuration {
     @Bean
     fun getPostgresMessageStorage(jdbcTemplate: JdbcTemplate): PostgresMessageStorage {
         return PostgresMessageStorage(jdbcTemplate)
+    }
+
+    @Bean
+    fun openApiAuthorization(): OpenApiCustomiser {
+        return OpenApiCustomiser {
+            val securitySchemeName = "Token"
+            val securityScheme = SecurityScheme()
+                .name("Authorization")
+                .scheme("string")
+                .type(SecurityScheme.Type.APIKEY)
+                .`in`(SecurityScheme.In.HEADER)
+            it.components.addSecuritySchemes(securitySchemeName, securityScheme)
+            it.addSecurityItem(SecurityRequirement().addList(securitySchemeName))
+        }
     }
 }
