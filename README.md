@@ -1,27 +1,28 @@
 [![Java CI with Maven](https://github.com/fmgolos/TestTask/actions/workflows/maven.yml/badge.svg)](https://github.com/fmgolos/TestTask/actions/workflows/maven.yml)
 
 ## Steps to launch project:
+
 1) #### Start postgres in docker
+
 ```console
 docker run \
---name postgres \
+--name database_for_test_task \
 -e POSTGRES_USER=postgres \
 -e POSTGRES_PASSWORD=test \
 -p 5432:5432 \
 -d postgres
 ```
-2) #### Pull project from https://hub.docker.com/
+
+2) #### Start project container
+
 ```console
-docker pull  TODO
-```
-3) #### Start project container
-```console
-docker start project TODO
+docker run fmgolos/fmgolos:application \
+--name application \
+-p 8888:8888
 ```
 
 You can check functionality use swagger (http://localhost:8888/swagger-ui/index.html#/)
 or make curl requests
-
 
 ## Curl requests:
 ### create new user
