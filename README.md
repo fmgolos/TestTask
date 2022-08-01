@@ -5,10 +5,19 @@
 1) #### Start postgres in docker
 
 ```console
-docker-compose up -d
+docker run \
+--name postgres \
+-e POSTGRES_USER=postgres \
+-e POSTGRES_PASSWORD=test \
+-p 5432:5432 \
+-d postgres
 ```
 
+1) #### Start postgres in docker
 
+```console
+docker-compose up -d
+```
 
 You can check functionality use swagger (http://localhost:8888/swagger-ui/index.html#/)
 or make curl requests

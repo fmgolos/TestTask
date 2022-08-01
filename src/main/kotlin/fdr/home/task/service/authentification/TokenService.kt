@@ -12,14 +12,12 @@ class TokenService {
             .claim("name", login)
             .setExpiration(expiredDate)
             .compact()
-
         return "Bearer_$token"
     }
 
     internal fun isToken(token: String): Boolean {
-        val tokenWithoutBearer = token.replace("Bearer_", "")
         return try {
-            Jwts.parserBuilder().build().parse(tokenWithoutBearer)
+            Jwts.parserBuilder().build().parse(token)
             true
         } catch (e: Exception) {
             false
