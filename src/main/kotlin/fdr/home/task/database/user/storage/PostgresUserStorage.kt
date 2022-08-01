@@ -22,7 +22,7 @@ class PostgresUserStorage(private val jdbcTemplate: JdbcTemplate) {
             ps.setString(2, entry.password)
             ps
         }, keyHolder)
-        logger.info { "User was successfully save to database" }
+        logger.info { "User was successfully saved to database" }
         return keyHolder.keyList.first().getValue("id").toString().toInt()
     }
 

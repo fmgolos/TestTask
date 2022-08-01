@@ -19,7 +19,7 @@ class PostgresMessageStorage(private val jdbcTemplate: JdbcTemplate) {
             ps.setString(2, entry.message)
             ps
         }, keyHolder)
-        logger.info { "Message was successfully save to database" }
+        logger.info { "Message was successfully saved to database" }
         return keyHolder.keyList.first().getValue("id").toString().toInt()
     }
 
