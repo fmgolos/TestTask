@@ -1,6 +1,5 @@
 package fdr.home.task.database.message.storage
 
-import fdr.home.task.controllers.message.MessageHistoryRequest
 import fdr.home.task.controllers.message.MessageRequest
 import fdr.home.task.controllers.user.UserCredentialsRequest
 import fdr.home.task.database.PostgresContainerWrapper
@@ -19,7 +18,7 @@ internal class PostgresMessageStorageTest {
         val password = "Password"
         val text = "Test text"
         userStorage.createNewUser(UserCredentialsRequest(login, password))
-        val messageId = dbMessageStorage.save(MessageRequest(login, text))
+        val messageId = dbMessageStorage.save(login, text)
         val actualMessage = Message(messageId, login, text)
         val expected = dbMessageStorage.getById(messageId)
         assertThat(actualMessage).isEqualTo(expected)
@@ -31,11 +30,11 @@ internal class PostgresMessageStorageTest {
         val password = "Password"
         val text = "Test text"
         userStorage.createNewUser(UserCredentialsRequest(login, password))
-        val messageRequestList = (0..20).map { it -> MessageRequest(login, "$text $it") }
-        messageRequestList.forEach { dbMessageStorage.save(it) }
-        val messageHistoryRequest = MessageHistoryRequest(login, 10)
+        val messageRequestList = (0..20).map { MessageRequest(login, "$text $it") }
+        messageRequestList.forEach { dbMessageStorage.save(it.name, it.message) }
         val actual = (11..20).map { messageRequestList[it] }
-        val expected = dbMessageStorage.getHistory(messageHistoryRequest).map { MessageRequest(it.name, it.message) }
+        val expected = dbMessageStorage.getHistory(login, 10).map { MessageRequest(it.name, it.message) }
+        expected.forEach { println(it) }
         assertThat(actual).containsAll(expected)
     }
 
@@ -45,10 +44,9 @@ internal class PostgresMessageStorageTest {
         val password = "Password"
         val text = "Test text"
         userStorage.createNewUser(UserCredentialsRequest(login, password))
-        val actual = (0..4).map { it -> MessageRequest(login, "TestText $it") }
-        actual.forEach { dbMessageStorage.save(it) }
-        val messageHistoryRequest = MessageHistoryRequest(login, 10)
-        val expected = dbMessageStorage.getHistory(messageHistoryRequest).map { MessageRequest(it.name, it.message) }
+        val actual = (0..4).map { MessageRequest(login, "$text $it") }
+        actual.forEach { dbMessageStorage.save(it.name, it.message) }
+        val expected = dbMessageStorage.getHistory(login, 10).map { MessageRequest(it.name, it.message) }
         assertThat(actual).containsAll(expected)
     }
 }

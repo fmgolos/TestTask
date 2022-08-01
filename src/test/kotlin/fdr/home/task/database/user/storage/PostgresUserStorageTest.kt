@@ -1,7 +1,5 @@
 package fdr.home.task.database.user.storage
 
-import fdr.home.task.controllers.message.MessageHistoryRequest
-import fdr.home.task.controllers.message.MessageRequest
 import fdr.home.task.controllers.user.UserCredentialsRequest
 import fdr.home.task.database.PostgresContainerWrapper
 import fdr.home.task.database.message.storage.PostgresMessageStorage
@@ -49,13 +47,11 @@ internal class PostgresUserStorageTest {
     fun `when user wad deleted all message deleted too`() {
         val name = "user"
         val user = UserCredentialsRequest(name, "password")
-        val message = MessageRequest(name, "message text")
-
+        val message = "message text"
         val userId = userStorage.createNewUser(user)
-        messageStorage.save(message)
-
+        messageStorage.save(name, message)
         userStorage.delete(userId)
-        val history = messageStorage.getHistory(MessageHistoryRequest(name, 10))
+        val history = messageStorage.getHistory(name, 10)
         assertThat(history).hasSize(0)
     }
 

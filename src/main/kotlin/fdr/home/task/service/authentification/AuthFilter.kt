@@ -24,7 +24,7 @@ class AuthFilter(
         val token = extractTokenFromRequest(request)
         val tokenWithoutBearerPrefix = token.replace("Bearer_", "")
         if (tokenService.isValid(tokenWithoutBearerPrefix)) {
-            return MyUser("your token here")
+            return AuthenticatedUser(TokenService().parseNameFromToken(tokenWithoutBearerPrefix))
         } else {
             throw AuthenticationCredentialsNotFoundException("No Authorization header found")
         }

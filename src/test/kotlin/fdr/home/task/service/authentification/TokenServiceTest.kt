@@ -14,15 +14,19 @@ class TokenServiceTest {
 
     @Test
     fun `is token`() {
-        val token = TokenService().create(name, Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
-        val fakeToken = token.plus("SomeText")
+        val token =
+            TokenService().create(name, Date.from(Instant.now().plus(24, ChronoUnit.HOURS))).replace("Bearer_", "")
+        val fakeToken = token.plus("SomeText").replace("Bearer_", "")
         assertTrue(TokenService().isToken(token))
         assertFalse(TokenService().isToken(fakeToken))
     }
 
+    @Test
     fun `token is expired`() {
-        val notExpiredToken = TokenService().create(name, Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
-        val expiredToken = TokenService().create(name, Date.from(Instant.now().minus(24, ChronoUnit.HOURS)))
+        val notExpiredToken =
+            TokenService().create(name, Date.from(Instant.now().plus(24, ChronoUnit.HOURS))).replace("Bearer_", "")
+        val expiredToken =
+            TokenService().create(name, Date.from(Instant.now().minus(24, ChronoUnit.HOURS))).replace("Bearer_", "")
         assertTrue(TokenService().isNotExpired(notExpiredToken))
         assertFalse(TokenService().isNotExpired(expiredToken))
     }

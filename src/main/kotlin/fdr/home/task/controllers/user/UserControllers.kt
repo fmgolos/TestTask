@@ -13,15 +13,15 @@ class UserControllers(
     private val userCredentialsStorage: PostgresUserStorage,
     private val authentication: Authentication
 ) {
+    @PostMapping("/create")
+    fun createNewUser(@RequestBody userCredentialsRequest: UserCredentialsRequest) {
+        userCredentialsStorage.createNewUser(userCredentialsRequest)
+    }
+
     @PostMapping("/login")
     fun login(@RequestBody userCredentialsRequest: UserCredentialsRequest): AuthResponse {
         val token = authentication.login(userCredentialsRequest.login, userCredentialsRequest.password)
         return AuthResponse(token)
-    }
-
-    @PostMapping("/create")
-    fun createNewUser(@RequestBody userCredentialsRequest: UserCredentialsRequest) {
-        userCredentialsStorage.createNewUser(userCredentialsRequest)
     }
 
     private companion object : KLogging()

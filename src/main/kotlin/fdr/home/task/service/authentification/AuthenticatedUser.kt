@@ -3,7 +3,7 @@ package fdr.home.task.service.authentification
 import org.springframework.security.authentication.AbstractAuthenticationToken
 import org.springframework.security.core.authority.AuthorityUtils
 
-data class MyUser(val login: String) : AbstractAuthenticationToken(AuthorityUtils.NO_AUTHORITIES) {
+data class AuthenticatedUser(val login: String) : AbstractAuthenticationToken(AuthorityUtils.NO_AUTHORITIES) {
     init {
         isAuthenticated = true
     }

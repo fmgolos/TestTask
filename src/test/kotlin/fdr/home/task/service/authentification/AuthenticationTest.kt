@@ -17,7 +17,7 @@ class AuthenticationTest {
         val user = UserCredentialsRequest(login, password)
         userStorage.createNewUser(user)
 
-        val token = Authentication(userStorage).login(login, password)
+        val token = Authentication(userStorage).login(login, password).replace("Bearer_", "")
         assertTrue(TokenService().isToken(token))
     }
 
