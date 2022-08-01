@@ -30,8 +30,8 @@ internal class PostgresUserStorageTest {
     fun `user is exist`() {
         val user = UserCredentialsRequest("testLogin", "testPassword")
         userStorage.createNewUser(user)
-        val exist = userStorage.isExist("testLogin", "testPassword")
-        val notExist = userStorage.isExist("falseLogin", "falsePassword")
+        val exist = userStorage.userIsExist("testLogin")
+        val notExist = userStorage.userIsExist("falseLogin")
         assertTrue(exist)
         assertFalse(notExist)
     }
@@ -41,7 +41,7 @@ internal class PostgresUserStorageTest {
         val user = UserCredentialsRequest("testLogin", "testPassword")
         val userId = userStorage.createNewUser(user)
         userStorage.delete(userId)
-        assertFalse(userStorage.isExist(user.login, user.password))
+        assertFalse(userStorage.userIsExist(user.login))
         assertThat(userStorage.getById(userId)).isEqualTo(null)
     }
 

@@ -2,17 +2,23 @@ package fdr.home.task.controllers.user
 
 import fdr.home.task.database.user.storage.PostgresUserStorage
 import fdr.home.task.service.authentification.Authentication
+import fdr.home.task.web.exceptions.UnAuthorizedException
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class UserControllers(private val userCredentialsStorage: PostgresUserStorage,private val authentication: Authentication) {
+class UserControllers(
+    private val userCredentialsStorage: PostgresUserStorage,
+    private val authentication: Authentication
+) {
     @PostMapping("/login")
     fun login(@RequestBody userCredentialsRequest: UserCredentialsRequest): AuthResponse {
-        val token = authentication.login(userCredentialsRequest.login, userCredentialsRequest.password)
+        if (userCredentialsStorage.userIsExist(userCredentialsRequest.login)) {
+            val token = authentication.login(userCredentialsRequest.login, userCredentialsRequest.password)
+            return AuthResponse(token)
+        } else throw UnAuthorizedException()
 
-        return AuthResponse(token)
     }
 
     @PostMapping("/create")

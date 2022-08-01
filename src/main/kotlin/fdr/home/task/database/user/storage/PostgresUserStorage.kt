@@ -1,8 +1,7 @@
 package fdr.home.task.database.user.storage
 
 import fdr.home.task.controllers.user.UserCredentialsRequest
-import fdr.home.task.database.message.storage.PostgresMessageStorage
-import mu.KLogger
+import fdr.home.task.web.exceptions.UnAuthorizedException
 import mu.KLogging
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
@@ -27,9 +26,17 @@ class PostgresUserStorage(private val jdbcTemplate: JdbcTemplate) {
         return keyHolder.keyList.first().getValue("id").toString().toInt()
     }
 
-    fun isExist(login: String, password: String): Boolean {
+    fun canBeAuthorized(login: String, password: String): Boolean {
         val sql = "select * from users where login = ? and password = ?"
         val response = jdbcTemplate.query(sql, UserCredentialsMapper(), login, password)
+        if (response.size > 0) {
+            return true
+        } else throw UnAuthorizedException()
+    }
+
+    fun userIsExist(login: String): Boolean {
+        val sql = "select * from users where login = ?"
+        val response = jdbcTemplate.query(sql, UserCredentialsMapper(), login)
         return response.size > 0
     }
 
