@@ -2,6 +2,7 @@ package fdr.home.task.service.authentification
 
 import com.auth0.jwt.JWT
 import io.jsonwebtoken.Jwts
+import mu.KLogging
 import java.time.Instant
 import java.util.*
 
@@ -31,7 +32,18 @@ class TokenService {
         return expiresAt > Instant.now()
     }
 
+    fun isValid(token: String): Boolean {
+        if (isToken(token) && isNotExpired(token)) {
+            return true
+        } else {
+            logger.info { "Token is not valid" }
+            throw IllegalAccessException()
+        }
+    }
+
     internal fun parseNameFromToken(token: String): String {
         return JWT.decode(token).getClaim("name").asString()
     }
+
+    private companion object : KLogging()
 }

@@ -3,6 +3,7 @@ package fdr.home.task.config
 import fdr.home.task.database.message.storage.PostgresMessageStorage
 import fdr.home.task.database.user.storage.PostgresUserStorage
 import fdr.home.task.service.authentification.Authentication
+import fdr.home.task.service.authentification.TokenService
 import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.security.SecurityScheme
 import org.springdoc.core.customizers.OpenApiCustomiser
@@ -42,5 +43,10 @@ class Configuration {
             it.components.addSecuritySchemes(securitySchemeName, securityScheme)
             it.addSecurityItem(SecurityRequirement().addList(securitySchemeName))
         }
+    }
+
+    @Bean
+    fun getTokenService(): TokenService {
+        return TokenService()
     }
 }
