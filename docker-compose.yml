@@ -1,0 +1,12 @@
+version: "2"
+
+services:
+  postgresql:
+    image: "postgres:alpine3.16"
+    network_mode: host
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=test
+  application:
+    image: "test-task:1.0-SNAPSHOT"
+    network_mode: host

@@ -5,21 +5,10 @@
 1) #### Start postgres in docker
 
 ```console
-docker run \
---name database_for_test_task \
--e POSTGRES_USER=postgres \
--e POSTGRES_PASSWORD=test \
--p 5432:5432 \
--d postgres
+docker-compose up -d
 ```
 
-2) #### Start project container
 
-```console
-docker run fmgolos/fmgolos:application \
---name application \
--p 8888:8888
-```
 
 You can check functionality use swagger (http://localhost:8888/swagger-ui/index.html#/)
 or make curl requests
