@@ -7,7 +7,7 @@ directory.**
 
 ##### ↓ docker-compose.yml content ↓
 
-```aidl
+```
 version: "2"
 
 services:
