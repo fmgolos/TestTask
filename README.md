@@ -29,7 +29,7 @@ docker-compose up -d
 
 As a result you will get 2 started containers. One of them - postgres, other -application
 
-Service will bw started automatically on http://localhost:8888/.
+Service will be started automatically on http://localhost:8888/.
 
 To see logs - execute command ↓
 
