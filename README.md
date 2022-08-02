@@ -2,7 +2,7 @@
 
 ## Steps to launch project:
 
-### 1) At first, you need to create or download  **_`docker-compose.yml`_** from git repo and put it in project root directory.
+### 1)  Need to create or download  **_`docker-compose.yml`_** from git repo and put it in project root directory.
 
 ##### ↓ docker-compose.yml content ↓
 
