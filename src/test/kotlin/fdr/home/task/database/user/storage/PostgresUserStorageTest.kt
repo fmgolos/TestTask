@@ -43,8 +43,8 @@ internal class PostgresUserStorageTest {
         assertThat(userStorage.getById(userId)).isEqualTo(null)
     }
 
-    @org.junit.Test
-    fun `when user wad deleted all message deleted too`() {
+    @Test
+    fun `when user was deleted all message deleted too`() {
         val name = "user"
         val user = PojoLoginPassword(name, "password")
         val message = "message text"
