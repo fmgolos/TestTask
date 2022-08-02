@@ -17,7 +17,7 @@ class AuthenticationTest {
         val user = PojoLoginPassword(login, password)
         userStorage.createNewUser(user)
 
-        val token = Authentication(userStorage).login(login, password).replace("Bearer_", "")
+        val token = Authentication(userStorage, TokenService()).login(login, password).replace("Bearer_", "")
         assertTrue(TokenService().isToken(token))
     }
 

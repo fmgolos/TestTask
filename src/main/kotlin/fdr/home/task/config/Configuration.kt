@@ -27,7 +27,7 @@ class Configuration {
 
     @Bean
     fun getAuthentication(jdbcTemplate: JdbcTemplate): Authentication {
-        return Authentication(getPostgresUserStorage(jdbcTemplate))
+        return Authentication(getPostgresUserStorage(jdbcTemplate), TokenService())
     }
 
     @Bean

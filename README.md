@@ -2,7 +2,8 @@
 
 ## Steps to launch project:
 
-* At first, you need to execute  **_`docker-compose.yaml`_**. Service will bw started automatically
+* At first, you need to execute  **_`docker-compose.yaml`_** from project root directory. Service will bw started
+  automatically
   on http://localhost:8888/
 
 ```console
@@ -26,41 +27,44 @@ curl -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "login": 'PUT YOUR USER NAME HERE',
-  "password": 'PUT YPUR PASSWORD HERE'
+  "login": "NewUser",
+  "password": "password"
 }'
 ```
 ### 2) Authorization 
 ##### in response, you get token, that you need to use in send message and history requests
+
 ```console
 curl -X 'POST' \
   'http://localhost:8888/login' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "login": 'NAME THAT YOU SET IN `CREATE USER` STEP',
-  "password": 'PASSWORD THAT YOU SET IN `CREATE USER` STEP'
+  "login": "NewUser",
+  "password": "password"
 }'
 ```
 ### 3) Send message
-##### you do not need to set your name in curl request because your name already include to the token from authorization step.
 
+##### you do not need to set your name in curl request because your name already included in the JWT token from authorization step.
 
 ```console
-curl -X 'POST' \
+  curl -X 'POST' \
   'http://localhost:8888/api/message/send' \
   -H 'accept: */*' \
   -H 'Authorization: YOUR TOKEN FROM AUTHORIZATION' \
   -H 'Content-Type: application/json' \
-  -d 'YOUR MESSAGE'
+  -d '{
+  "text": "Test message"
+}'
 ```
 ### 4) History request
-##### you do not need to set your name in curl request because your name already include to the token from authorization step.
+
+##### you do not need to set your name in curl request because your name already included in the JWT token from authorization step.
 ```console
 curl -X 'GET' \
-  'http://localhost:8888/api/message/history?limitOfMessage='AMOUNT OF MESSAGE' \
+  'http://localhost:8888/api/message/history?limit=10' \
   -H 'accept: */*' \
   -H 'Authorization: YOUR_TOKEN_FROM_AUTHORIZATION'
 ```
-
 

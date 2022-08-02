@@ -7,12 +7,12 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.*
 
-class Authentication(private val userStorage: PostgresUserStorage) {
+class Authentication(private val userStorage: PostgresUserStorage, private val tokenService: TokenService) {
 
     fun login(login: String, password: String): String {
         if (userStorage.canBeAuthorized(login, password)) {
             logger.info { "Successfully authenticated" }
-            return TokenService().create(login, Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
+            return tokenService.create(login, Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
         } else {
             logger.info { "Wrong login or password" }
             throw UnAuthorizedException()

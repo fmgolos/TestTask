@@ -10,7 +10,6 @@ import java.util.*
 class TokenServiceTest {
     private val name = "TestName"
     private val token = TokenService().create(name, Date.from(Instant.now().plus(24, ChronoUnit.HOURS)))
-    private val fakeToken = token.plus("SomeText")
 
     @Test
     fun `is token`() {

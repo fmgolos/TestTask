@@ -1,6 +1,5 @@
 package fdr.home.task.database.message.storage
 
-import fdr.home.task.controllers.message.MessageRequest
 import fdr.home.task.controllers.user.PojoLoginPassword
 import fdr.home.task.database.PostgresContainerWrapper
 import fdr.home.task.database.user.storage.PostgresUserStorage
@@ -50,3 +49,5 @@ internal class PostgresMessageStorageTest {
         assertThat(actual).containsAll(expected)
     }
 }
+
+data class MessageRequest(val name: String, val message: String)

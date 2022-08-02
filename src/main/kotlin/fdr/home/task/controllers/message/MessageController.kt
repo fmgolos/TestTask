@@ -3,7 +3,6 @@ package fdr.home.task.controllers.message
 import fdr.home.task.database.message.storage.Message
 import fdr.home.task.database.message.storage.PostgresMessageStorage
 import fdr.home.task.service.authentification.AuthenticatedUser
-import feign.Param
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 
@@ -11,17 +10,15 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/message")
 class MessageController(private val messageStorage: PostgresMessageStorage) {
     @PostMapping("/send")
-    fun sendMessage(@RequestBody messageText: MessageText) {
+    fun sendMessage(@RequestBody message: MessageText) {
         val authenticatedUser = SecurityContextHolder.getContext().authentication as AuthenticatedUser
-        messageStorage.save(authenticatedUser.name, messageText.text)
+        messageStorage.save(authenticatedUser.name, message.text)
     }
 
-    @GetMapping("/history?limit={limit}")
-    fun getHistory(@Param("limit") limit: Int): List<Message> {
+    @GetMapping("/history")
+    fun getHistory(limit: Int): List<Message> {
         val authenticatedUser = SecurityContextHolder.getContext().authentication as AuthenticatedUser
-        val history = messageStorage.getHistory(authenticatedUser.name, limit)
-        history.forEach { println(it) }
-        return history
+        return messageStorage.getHistory(authenticatedUser.name, limit)
     }
 }
 
