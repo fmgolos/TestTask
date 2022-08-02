@@ -31,11 +31,11 @@ class TokenService {
     }
 
     fun isValid(token: String): Boolean {
-        if (isToken(token) && isNotExpired(token)) {
-            return true
+        return if (isToken(token) && isNotExpired(token)) {
+            true
         } else {
             logger.info { "Token is not valid" }
-            throw IllegalAccessException()
+            false
         }
     }
 

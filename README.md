@@ -2,26 +2,9 @@
 
 ## Steps to launch project:
 
-### 1)  Need to create or download  **_`docker-compose.yml`_** from git repo and put it in project root directory.
+### 1)  Clone repository
 
-##### ↓ docker-compose.yml content ↓
-
-```
-version: "2"
-
-services:
-  postgresql:
-    image: "postgres:alpine3.16"
-    network_mode: host
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=test
-  application:
-    image: "fmgolos/test-task:application"
-    network_mode: host
-```
-
-### 2) Execute command
+### 2) Execute command from root directory
 
 ```console
 docker-compose up -d
@@ -41,8 +24,8 @@ You can check functionality use swagger (http://localhost:8888/swagger-ui/index.
 or make curl requests
 
 ------------------
-> * At first need to create user, because database has foreign key, and next steps are impossible
-> * Authorize use login and password, that you set in
+> * At first need to create user, because database has is empty, and next steps are impossible
+> * Authenticate, use login and password, that you set in 'create user' endpoint
 >* If you use swagger for check app functionality - make sure that you set up token from "login" to special
    > field that name "Authorize"
 -------------------
@@ -53,6 +36,7 @@ or make curl requests
 
 ```console
 curl -X 'POST' \
+  -v \
   'http://localhost:8888/create' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
@@ -80,6 +64,7 @@ curl -X 'POST' \
 
 ```console
   curl -X 'POST' \
+  -v \
   'http://localhost:8888/api/message/send' \
   -H 'accept: */*' \
   -H 'Authorization: YOUR TOKEN FROM AUTHORIZATION' \
