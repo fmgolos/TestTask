@@ -2,8 +2,7 @@
 
 ## Steps to launch project:
 
-### 1) **At first, you need to create or download  **_`docker-compose.yml`_** from git repo and put it in project root
-directory.**
+### 1) At first, you need to create or download  **_`docker-compose.yml`_** from git repo and put it in project root directory.
 
 ##### ↓ docker-compose.yml content ↓
 
@@ -22,17 +21,17 @@ services:
     network_mode: host
 ```
 
-### 2) **Execute command**
+### 2) Execute command
 
 ```console
 docker-compose up -d
 ```
 
-As a result you will get 2 started containers. One of them - Postgres, other -application
+As a result you will get 2 started containers. One of them - postgres, other -application
 
 Service will bw started automatically on http://localhost:8888/.
 
-If you need application logs, you can turn on it executed command
+To see logs - execute command ↓
 
 ```console
 docker logs -f --tail 200 testtask_application_1
