@@ -24,7 +24,7 @@ You can check functionality use swagger (http://localhost:8888/swagger-ui/index.
 or make curl requests
 
 ------------------
-> * At first need to create user, because database has is empty, so next steps are impossible
+> * At first need to create user, because database is empty, so next steps are impossible
 > * Authenticate, use login and password, that you set in 'create user' endpoint
 >* If you use swagger for check app functionality - make sure that you set up token from "login" to special
    > field that name "Authorize"
