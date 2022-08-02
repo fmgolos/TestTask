@@ -4,7 +4,7 @@
 
 ### 1)  Clone repository
 
-### 2) Execute command from root directory
+### 2) Execute command from project root directory
 
 ```console
 docker-compose up -d
@@ -60,7 +60,7 @@ curl -X 'POST' \
 ```
 ### 3) Send message
 
-##### Not needed to set your name in curl request because your name already included in the JWT token from authorization step.
+##### No need to set your name in curl request because your name already included in the JWT token from authorization step.
 
 ```console
   curl -X 'POST' \
@@ -75,7 +75,7 @@ curl -X 'POST' \
 ```
 ### 4) History request
 
-##### Not needed to set your name in curl request because your name already included in the JWT token from authorization step.
+##### No need to set your name in curl request because your name already included in the JWT token from authorization step.
 ```console
 curl -X 'GET' \
   'http://localhost:8888/api/message/history?limit=10' \
