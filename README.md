@@ -24,7 +24,7 @@ You can check functionality use swagger (http://localhost:8888/swagger-ui/index.
 or make curl requests
 
 ------------------
-> * At first need to create user, because database has is empty, and next steps are impossible
+> * At first need to create user, because database has is empty, so next steps are impossible
 > * Authenticate, use login and password, that you set in 'create user' endpoint
 >* If you use swagger for check app functionality - make sure that you set up token from "login" to special
    > field that name "Authorize"
@@ -60,7 +60,7 @@ curl -X 'POST' \
 ```
 ### 3) Send message
 
-##### No need to set your name in curl request because your name already included in the JWT token from authorization step.
+##### No need to set your name in curl request because your name is already included in the JWT token from authorization step.
 
 ```console
   curl -X 'POST' \
@@ -75,7 +75,7 @@ curl -X 'POST' \
 ```
 ### 4) History request
 
-##### No need to set your name in curl request because your name already included in the JWT token from authorization step.
+##### No need to set your name in curl request because your name is already included in the JWT token from authorization step.
 ```console
 curl -X 'GET' \
   'http://localhost:8888/api/message/history?limit=10' \
