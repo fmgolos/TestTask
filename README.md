@@ -27,7 +27,7 @@ services:
 docker-compose up -d
 ```
 
-As a result you will get 2 started containers. One of them - postgres, other -application
+As a result you will get 2 started containers. One of them - postgres, other - application
 
 Service will be started automatically on http://localhost:8888/.
 
@@ -41,8 +41,9 @@ You can check functionality use swagger (http://localhost:8888/swagger-ui/index.
 or make curl requests
 
 ------------------
-> * At first needed to create user, because database has foreign key, and next steps are impossible
->* If you use swagger for check app functionality - mke sure that you set up token from "login" to special
+> * At first need to create user, because database has foreign key, and next steps are impossible
+> * Authorize use login and password, that you set in
+>* If you use swagger for check app functionality - make sure that you set up token from "login" to special
    > field that name "Authorize"
 -------------------
 
