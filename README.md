@@ -2,23 +2,51 @@
 
 ## Steps to launch project:
 
-* At first, you need to execute  **_`docker-compose.yaml`_** from project root directory. Service will bw started
-  automatically
-  on http://localhost:8888/
+### 1) **At first, you need to create or download  **_`docker-compose.yml`_** from git repo and put it in project root
+directory.**
+
+##### ↓ docker-compose.yml content ↓
+
+```aidl
+version: "2"
+
+services:
+  postgresql:
+    image: "postgres:alpine3.16"
+    network_mode: host
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=test
+  application:
+    image: "fmgolos/test-task:application"
+    network_mode: host
+```
+
+### 2) **Execute command**
 
 ```console
 docker-compose up -d
 ```
 
-Application logs
+As a result you will get 2 started containers. One of them - Postgres, other -application
+
+Service will bw started automatically on http://localhost:8888/.
+
+If you need application logs, you can turn on it executed command
+
 ```console
 docker logs -f --tail 200 testtask_application_1
 ```
 
 You can check functionality use swagger (http://localhost:8888/swagger-ui/index.html#/)
 or make curl requests
+> IMPORTANT! At first needed to create user, because database has foreign key, and next steps are impossible IMPORTANT!
+
+> IMPORTANT! If you use swagger for check app functionality - mke sure that you set up token from "login" to special
+> field that name "Authorize" IMPORTANT!
 
 ## Curl requests:
+
 ### 1) Create new user
 
 ```console
@@ -46,7 +74,7 @@ curl -X 'POST' \
 ```
 ### 3) Send message
 
-##### you do not need to set your name in curl request because your name already included in the JWT token from authorization step.
+##### Not needed to set your name in curl request because your name already included in the JWT token from authorization step.
 
 ```console
   curl -X 'POST' \
@@ -60,7 +88,7 @@ curl -X 'POST' \
 ```
 ### 4) History request
 
-##### you do not need to set your name in curl request because your name already included in the JWT token from authorization step.
+##### Not needed to set your name in curl request because your name already included in the JWT token from authorization step.
 ```console
 curl -X 'GET' \
   'http://localhost:8888/api/message/history?limit=10' \
