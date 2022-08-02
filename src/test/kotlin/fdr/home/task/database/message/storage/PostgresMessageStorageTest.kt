@@ -1,7 +1,7 @@
 package fdr.home.task.database.message.storage
 
 import fdr.home.task.controllers.message.MessageRequest
-import fdr.home.task.controllers.user.UserCredentialsRequest
+import fdr.home.task.controllers.user.PojoLoginPassword
 import fdr.home.task.database.PostgresContainerWrapper
 import fdr.home.task.database.user.storage.PostgresUserStorage
 import org.assertj.core.api.Assertions.assertThat
@@ -17,7 +17,7 @@ internal class PostgresMessageStorageTest {
         val login = "TestName"
         val password = "Password"
         val text = "Test text"
-        userStorage.createNewUser(UserCredentialsRequest(login, password))
+        userStorage.createNewUser(PojoLoginPassword(login, password))
         val messageId = dbMessageStorage.save(login, text)
         val actualMessage = Message(messageId, login, text)
         val expected = dbMessageStorage.getById(messageId)
@@ -29,7 +29,7 @@ internal class PostgresMessageStorageTest {
         val login = "TestName"
         val password = "Password"
         val text = "Test text"
-        userStorage.createNewUser(UserCredentialsRequest(login, password))
+        userStorage.createNewUser(PojoLoginPassword(login, password))
         val messageRequestList = (0..20).map { MessageRequest(login, "$text $it") }
         messageRequestList.forEach { dbMessageStorage.save(it.name, it.message) }
         val actual = (11..20).map { messageRequestList[it] }
@@ -43,7 +43,7 @@ internal class PostgresMessageStorageTest {
         val login = "TestName"
         val password = "Password"
         val text = "Test text"
-        userStorage.createNewUser(UserCredentialsRequest(login, password))
+        userStorage.createNewUser(PojoLoginPassword(login, password))
         val actual = (0..4).map { MessageRequest(login, "$text $it") }
         actual.forEach { dbMessageStorage.save(it.name, it.message) }
         val expected = dbMessageStorage.getHistory(login, 10).map { MessageRequest(it.name, it.message) }

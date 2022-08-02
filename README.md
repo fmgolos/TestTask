@@ -2,21 +2,16 @@
 
 ## Steps to launch project:
 
-1) #### Start postgres in docker
-
-```console
-docker run \
---name postgres \
--e POSTGRES_USER=postgres \
--e POSTGRES_PASSWORD=test \
--p 5432:5432 \
--d postgres
-```
-
-1) #### Start postgres in docker
+* At first, you need to execute  **_`docker-compose.yaml`_**. Service will bw started automatically
+  on http://localhost:8888/
 
 ```console
 docker-compose up -d
+```
+
+Application logs
+```console
+docker logs -f --tail 200 testtask_application_1
 ```
 
 You can check functionality use swagger (http://localhost:8888/swagger-ui/index.html#/)

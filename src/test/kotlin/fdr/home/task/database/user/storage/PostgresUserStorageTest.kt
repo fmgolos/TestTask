@@ -1,6 +1,6 @@
 package fdr.home.task.database.user.storage
 
-import fdr.home.task.controllers.user.UserCredentialsRequest
+import fdr.home.task.controllers.user.PojoLoginPassword
 import fdr.home.task.database.PostgresContainerWrapper
 import fdr.home.task.database.message.storage.PostgresMessageStorage
 import org.assertj.core.api.Assertions.assertThat
@@ -17,7 +17,7 @@ internal class PostgresUserStorageTest {
     fun `create new user`() {
         val login = "testLogin"
         val password = "testPassword"
-        val user = UserCredentialsRequest(login, password)
+        val user = PojoLoginPassword(login, password)
         val id = userStorage.createNewUser(user)
         val actual = UserCredentials(id, login, password)
         val expected = userStorage.getById(id)
@@ -26,7 +26,7 @@ internal class PostgresUserStorageTest {
 
     @Test
     fun `user is exist`() {
-        val user = UserCredentialsRequest("testLogin", "testPassword")
+        val user = PojoLoginPassword("testLogin", "testPassword")
         userStorage.createNewUser(user)
         val exist = userStorage.userIsExist("testLogin")
         val notExist = userStorage.userIsExist("falseLogin")
@@ -36,7 +36,7 @@ internal class PostgresUserStorageTest {
 
     @Test
     fun `delete user`() {
-        val user = UserCredentialsRequest("testLogin", "testPassword")
+        val user = PojoLoginPassword("testLogin", "testPassword")
         val userId = userStorage.createNewUser(user)
         userStorage.delete(userId)
         assertFalse(userStorage.userIsExist(user.login))
@@ -46,7 +46,7 @@ internal class PostgresUserStorageTest {
     @org.junit.Test
     fun `when user wad deleted all message deleted too`() {
         val name = "user"
-        val user = UserCredentialsRequest(name, "password")
+        val user = PojoLoginPassword(name, "password")
         val message = "message text"
         val userId = userStorage.createNewUser(user)
         messageStorage.save(name, message)

@@ -1,6 +1,6 @@
 package fdr.home.task.service.authentification
 
-import fdr.home.task.controllers.user.UserCredentialsRequest
+import fdr.home.task.controllers.user.PojoLoginPassword
 import fdr.home.task.database.PostgresContainerWrapper
 import fdr.home.task.database.user.storage.PostgresUserStorage
 import junit.framework.TestCase.assertTrue
@@ -14,7 +14,7 @@ class AuthenticationTest {
 
         val login = "testLogin"
         val password = "testPassword"
-        val user = UserCredentialsRequest(login, password)
+        val user = PojoLoginPassword(login, password)
         userStorage.createNewUser(user)
 
         val token = Authentication(userStorage).login(login, password).replace("Bearer_", "")

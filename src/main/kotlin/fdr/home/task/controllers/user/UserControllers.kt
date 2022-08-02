@@ -14,13 +14,13 @@ class UserControllers(
     private val authentication: Authentication
 ) {
     @PostMapping("/create")
-    fun createNewUser(@RequestBody userCredentialsRequest: UserCredentialsRequest) {
-        userCredentialsStorage.createNewUser(userCredentialsRequest)
+    fun createNewUser(@RequestBody pojoLoginPassword: PojoLoginPassword) {
+        userCredentialsStorage.createNewUser(pojoLoginPassword)
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody userCredentialsRequest: UserCredentialsRequest): AuthResponse {
-        val token = authentication.login(userCredentialsRequest.login, userCredentialsRequest.password)
+    fun login(@RequestBody pojoLoginPassword: PojoLoginPassword): AuthResponse {
+        val token = authentication.login(pojoLoginPassword.login, pojoLoginPassword.password)
         return AuthResponse(token)
     }
 
