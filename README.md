@@ -39,10 +39,14 @@ docker logs -f --tail 200 testtask_application_1
 
 You can check functionality use swagger (http://localhost:8888/swagger-ui/index.html#/)
 or make curl requests
-> IMPORTANT! At first needed to create user, because database has foreign key, and next steps are impossible IMPORTANT!
+> IMPORTANT!
+> At first needed to create user, because database has foreign key, and next steps are impossible
+> IMPORTANT!
 
-> IMPORTANT! If you use swagger for check app functionality - mke sure that you set up token from "login" to special
-> field that name "Authorize" IMPORTANT!
+> IMPORTANT!
+> If you use swagger for check app functionality - mke sure that you set up token from "login" to special
+> field that name "Authorize"
+> IMPORTANT!
 
 ## Curl requests:
 
